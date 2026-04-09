@@ -1,177 +1,156 @@
-🔐 auth-API | Authentication API
+---
 
-A REST API for user authentication with secure password hashing,
-JWT-based sessions, and protected routes. Built with Node.js, Express,
-Prisma, and PostgreSQL.
+# 🔐 Auth-API
 
-------------------------------------------------------------------------
+A simple authentication API providing secure user registration, JWT-based login, and protected route management. Built with Node.js, Prisma, and PostgreSQL.
 
-🚀 Tech Stack
+---
 
--   Node.js
--   Express
--   Prisma ORM
--   PostgreSQL
--   JWT (JSON Web Token)
--   bcrypt for password hashing
--   dotenv for environment variables
+## 🚀 Tech Stack
 
-------------------------------------------------------------------------
+- **Node.js**
+- **Express**
+- **Prisma ORM** (Database management)
+- **PostgreSQL**
+- **JSON Web Token (JWT)** (Secure authentication)
+- **bcrypt** (Password hashing)
 
-📁 Project Structure
+---
 
-    ├── server.js
-    ├── package.json
-    ├── prisma/
-    │   └── schema.prisma
-    ├── public/
-    │   ├── index.html
-    │   ├── style.css
-    │   └── script.js
-    └── src/
-        ├── controllers/
-        │   └── userController.js
-        ├── middleware/
-        │   └── authMiddleware.js
-        ├── repositories/
-        │   └── userRepository.js
-        ├── routes/
-        │   └── userRouter.js
-        └── services/
-            └── userService.js
+## 📁 Project Structure
 
-------------------------------------------------------------------------
+```
+├── server.js
+├── package.json
+├── prisma/
+│   └── schema.prisma
+├── public/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+└── src/ (Sugerido, ajuste conforme sua pasta real)
+    ├── controllers/
+    ├── middlewares/
+    ├── routes/
+    └── utils/
+```
 
-⚙️ Prerequisites
+---
 
--   Node.js v18+
--   PostgreSQL installed and running
+## ⚙️ Prerequisites
 
-------------------------------------------------------------------------
+- [Node.js](https://nodejs.org/) v18+
+- [PostgreSQL](https://www.postgresql.org/) instance running
 
-🛠️ Setup & Installation
+---
 
-1. Clone the repository
+## 🛠️ Setup & Installation
 
-    git clone https://github.com/HeitorTrindade-dev/auth-api.git
-    cd auth-api
+### 1. Install dependencies
 
-2. Install dependencies
+```bash
+npm install
+```
 
-    npm install
+### 2. Configure environment variables
 
-3. Configure environment variables
+Create a `.env` file in the project root based on `.env.example`:
 
-Create a .env file in the project root.
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/authapi?schema=public"
+JWT_SECRET="your_super_secret_key"
+```
 
-Example:
+### 3. Database Migration & Prisma Client
 
-    DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/authapi"
-    JWT_SECRET="your_secret_key"
+```bash
+# Generate the Prisma client
+npx prisma generate
 
-------------------------------------------------------------------------
+# Push the schema to your database
+npx prisma db push
+```
 
-4. Run database migrations
+### 4. Start the server
 
-    npx prisma migrate dev
+```bash
+npm run dev
+```
 
-This will create the database tables defined in the Prisma schema.
+The server will be available at `http://localhost:3000`.
 
-------------------------------------------------------------------------
+---
 
-5. Generate Prisma Client
+## 📡 API Endpoints
 
-    npx prisma generate
+### `POST /api/users/register`
+Creates a new user with a hashed password.
 
-------------------------------------------------------------------------
+**Request body:**
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
 
-6. Start the development server
+---
 
-    npm run dev
+### `POST /api/users/login`
+Authenticates a user and returns a Bearer Token.
 
-The server will be available at:
+**Response `200`:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1..."
+}
+```
 
-    http://localhost:3000
+---
 
-------------------------------------------------------------------------
+### `GET /api/users/protected`
+A private route that requires a valid JWT in the headers.
 
-📡 API Endpoints
+**Headers:**
+```http
+Authorization: Bearer your-jwt-token
+```
 
-POST /api/users/register
+**Response `200`:**
+```json
+{
+  "message": "Authenticated",
+  "userId": 1
+}
+```
 
-Creates a new user.
+---
 
-Request body:
+## 🌐 Web Interface
 
-    {
-      "email": "user@example.com",
-      "password": "password123"
-    }
+The project includes a minimal frontend located in the `public/` folder. 
 
-Response:
+> ⚠️ **Note:** The frontend is **100% vibe-coded** and exists solely to facilitate quick API testing in the browser. The core focus of this repository is the backend implementation.
 
-    {
-      "user": {
-        "id": 1,
-        "email": "user@example.com"
-      }
-    }
+---
 
-------------------------------------------------------------------------
+## 🔒 Security Features
 
-POST /api/users/login
+- **Password Hashing:** Uses `bcrypt` to ensure passwords are never stored in plain text.
+- **JWT Authentication:** Implements stateless authentication via tokens.
+- **Route Protection:** Middleware logic to intercept and validate requests to private endpoints.
 
-Authenticates a user and returns a JWT token.
+---
+## 🖼️ Screenshots
 
-Request body:
-
-    {
-      "email": "user@example.com",
-      "password": "password123"
-    }
-
-Response:
-
-    {
-      "token": "your-jwt-token"
-    }
-
-------------------------------------------------------------------------
-
-GET /api/users/protected
-
-Access a protected route using a valid token.
-
-Headers:
-
-    Authorization: Bearer your-jwt-token
-
-Response:
-
-    {
-      "message": "Authenticated",
-      "userId": 1
-    }
-
-------------------------------------------------------------------------
-
-🔐 Authentication Flow
-
-1.  The user registers with email and password
-2.  The password is hashed using bcrypt
-3.  During login, the password is compared with the stored hash
-4.  If valid, the API returns a JWT token
-5.  Protected routes require the token in the Authorization header
-
-------------------------------------------------------------------------
-
-🌐 Web Interface
-
-Accessing:
-
-    http://localhost:3000
-
-serves a simple frontend from the public/ folder.
-
-Note: the frontend is a minimal vibe-coded interface meant only to test
-the API quickly during development.
+<div align="center">
+  <p><strong>Interface Principal</strong></p>
+  <img src="./prints/p1.png" width="90%" alt="Screenshot Principal">
+  
+  <br><br>
+  
+  <div style="display: flex; justify-content: center; gap: 10px;">
+    <img src="./prints/p2.png" width="44.5%" alt="Screenshot 2">
+    <img src="./prints/p3.png" width="44.5%" alt="Screenshot 3">
+  </div>
+</div>
