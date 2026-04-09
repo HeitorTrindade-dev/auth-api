@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth-API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="panel">
+        <h1 class="title">Auth-API</h1>
+
+        <div class="tabs" role="tablist" aria-label="Auth">
+          <button class="tab is-active" type="button" data-tab-trigger="login">Login</button>
+          <button class="tab" type="button" data-tab-trigger="register">Register</button>
+          <button class="tab" type="button" data-tab-trigger="session">Session</button>
+        </div>
+
+        <section class="tab-panel is-active" data-tab-panel="login">
+          <form id="login-form" class="form">
+            <input class="input" type="email" name="email" placeholder="Email" required />
+            <input class="input" type="password" name="password" placeholder="Password" required />
+            <button class="button" type="submit">Sign In</button>
+          </form>
+        </section>
+
+        <section class="tab-panel" data-tab-panel="register">
+          <form id="register-form" class="form">
+            <input class="input" type="email" name="email" placeholder="Email" required />
+            <input class="input" type="password" name="password" placeholder="Password" required />
+            <button class="button" type="submit">Create Account</button>
+          </form>
+        </section>
+
+        <section class="tab-panel" data-tab-panel="session">
+          <div class="session-card">
+            <div id="session-indicator" class="session-indicator is-unvalidated" aria-live="polite">
+              <div class="session-icon" aria-hidden="true">
+                <span class="icon-lock"></span>
+                <span class="icon-check"></span>
+              </div>
+              <strong id="session-state" class="session-state">Not validated</strong>
+            </div>
+            <button id="logout" class="button button-secondary" type="button">Sign Out</button>
+          </div>
+        </section>
+
+        <p id="status" class="status" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
