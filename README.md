@@ -83,7 +83,7 @@ The server will be available at `http://localhost:3000`.
 
 ## 📡 API Endpoints
 
-### `POST /api/users/register`
+### `POST /api/auth/users/register`
 Creates a new user with a hashed password.
 
 **Request body:**
@@ -96,7 +96,7 @@ Creates a new user with a hashed password.
 
 ---
 
-### `POST /api/users/login`
+### `POST /api/auth/users/login`
 Authenticates a user and returns a Bearer Token.
 
 **Response `200`:**
@@ -108,7 +108,7 @@ Authenticates a user and returns a Bearer Token.
 
 ---
 
-### `GET /api/users/protected`
+### `GET /api/auth/users/protected`
 A private route that requires a valid JWT in the headers.
 
 **Headers:**
